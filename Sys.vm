@@ -1,84 +1,89 @@
 function Sys.min 0
-    push argument 1
     push argument 0
+    push argument 1
     lt
-    if-goto ARG1_LESS
-    push argument 0
-    goto END
-label ARG1_LESS
+    if-goto ARG0_MIN
     push argument 1
-label END
+    goto END_MIN
+label ARG0_MIN
+    push argument 0
+label END_MIN
     return
 
 function Sys.max 0
-    push argument 1
     push argument 0
+    push argument 1
     gt
-    if-goto ARG1_GREATER
-    push argument 0
-    goto END
-label ARG1_GREATER
+    if-goto ARG0_MAX
     push argument 1
-label END
+    goto END_MAX
+label ARG0_MAX
+    push argument 0
+label END_MAX
     return
 
-function Sys.range 4
+function Sys.range 5
+    push argument 0
+    pop local 0 
     push argument 1
+    pop local 1
+
+    push local 1
     push constant 1
     lt
     if-goto RETURN_ZERO
-    push argument 1
+    push local 1
     push constant 1
     eq
     if-goto RETURN_ZERO
 
-    push argument 0
+    push local 0
     pop pointer 1
     push that 0
-    pop local 1
+    pop local 2
     push that 0
-    pop local 2 
+    pop local 3
 
     push constant 1
-    pop local 0 
+    pop local 4
 
-label LOOP
-    push local 0
-    push argument 1
+LOOP:
+    push local 4
+    push local 1
     lt
     not
     if-goto END_LOOP
 
-    push argument 0
     push local 0
+    push local 4
     add
-    pop pointer 1 
+    pop pointer 1
     push that 0
-    pop local 3
+    pop temp 0
 
-    push local 1
-    push local 3
-    call Sys.min 2
-    pop local 1
-
+    push temp 0
     push local 2
-    push local 3
-    call Sys.max 2
+    call Sys.min 2
     pop local 2
 
-    push local 0
+    push temp 0
+    push local 3
+    call Sys.max 2
+    pop local 3
+
+    push local 4
     push constant 1
     add
-    pop local 0
+    pop local 4
 
     goto LOOP
 
-label END_LOOP
+END_LOOP:
+    push local 3
     push local 2
-    push local 1
     sub
     return
 
-label RETURN_ZERO
+RETURN_ZERO:
     push constant 0
     return
