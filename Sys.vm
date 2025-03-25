@@ -1,78 +1,84 @@
 function Sys.min 0
-push local 0 
-push local 1 
-lt
-if-goto MIN_FIRST
-
-push local 1
-return
-
-label MIN_FIRST
-push local 0
-return
+    push argument 1
+    push argument 0
+    lt
+    if-goto ARG1_LESS
+    push argument 0
+    goto END
+label ARG1_LESS
+    push argument 1
+label END
+    return
 
 function Sys.max 0
-push local 0 
-push local 1 
-gt
-if-goto MAX_FIRST
+    push argument 1
+    push argument 0
+    gt
+    if-goto ARG1_GREATER
+    push argument 0
+    goto END
+label ARG1_GREATER
+    push argument 1
+label END
+    return
 
-push local 1
-return
+function Sys.range 4 
+    push argument 1
+    push constant 1
+    lt
+    if-goto RETURN_ZERO
+    push argument 1
+    push constant 1
+    eq
+    if-goto RETURN_ZERO
 
-label MAX_FIRST
-push local 0
-return
+    push argument 0
+    pop pointer 1 
+    push that 0
+    pop local 1 
+    push that 0
+    pop local 2 
 
-function Sys.range 0
-
-// If n <= 1, return 0
-push argument 1
-push constant 1
-lt
-if-goto RETURN_ZERO
-
-push argument 0
-pop pointer 1
-push that 0
-pop local 0 
-push that 0
-pop local 1 
+    push constant 1
+    pop local 0
 
 label LOOP
-push argument 1
-push constant 1
-sub
-pop argument 1
-if-goto CONTINUE
-goto COMPUTE_RANGE
+    push local 0
+    push argument 1
+    lt
+    not
+    if-goto END_LOOP
 
-label CONTINUE
-push argument 0
-push constant 1
-add
-pop argument 0
+    push argument 0
+    push local 0
+    add
+    pop pointer 1 
+    push that 0
+    pop local 3 
 
-push argument 0
-pop pointer 1
-push that 0
-push local 0
-call Sys.min 2
-pop local 0
+    push local 1
+    push local 3
+    call Sys.min 2
+    pop local 1
 
-push that 0
-push local 1
-call Sys.max 2
-pop local 1
+    push local 2
+    push local 3
+    call Sys.max 2
+    pop local 2
 
-goto LOOP
+    push local 0
+    push constant 1
+    add
+    pop local 0
 
-label COMPUTE_RANGE
-push local 1
-push local 0
-sub
-return
+    goto LOOP
+
+label END_LOOP
+    push local 2
+    push local 1
+    sub
+    return
 
 label RETURN_ZERO
-push constant 0
-return
+    push constant 0
+    return
