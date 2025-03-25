@@ -22,7 +22,7 @@ label ARG1_GREATER
 label END
     return
 
-function Sys.range 4 
+function Sys.range 4
     push argument 1
     push constant 1
     lt
@@ -33,14 +33,14 @@ function Sys.range 4
     if-goto RETURN_ZERO
 
     push argument 0
-    pop pointer 1 
+    pop pointer 1
     push that 0
-    pop local 1 
+    pop local 1
     push that 0
     pop local 2 
 
     push constant 1
-    pop local 0
+    pop local 0 
 
 label LOOP
     push local 0
@@ -54,7 +54,7 @@ label LOOP
     add
     pop pointer 1 
     push that 0
-    pop local 3 
+    pop local 3
 
     push local 1
     push local 3
