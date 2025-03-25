@@ -1,39 +1,41 @@
 function Sys.min 0
-push argument 0
-push argument 1
+push local 0 
+push local 1 
 lt
 if-goto MIN_FIRST
 
-push argument 1
+push local 1
 return
 
 label MIN_FIRST
-push argument 0
+push local 0
 return
 
 function Sys.max 0
-push argument 0
-push argument 1
-gt 
+push local 0 
+push local 1 
+gt
 if-goto MAX_FIRST
 
-push argument 1
+push local 1
 return
 
 label MAX_FIRST
-push argument 0
+push local 0
 return
 
 function Sys.range 0
 
+// If n <= 1, return 0
 push argument 1
 push constant 1
 lt
 if-goto RETURN_ZERO
 
+push argument 0
 pop pointer 1
 push that 0
-pop local 0
+pop local 0 
 push that 0
 pop local 1 
 
