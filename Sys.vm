@@ -4,10 +4,10 @@ function Sys.min 0
     lt
     if-goto ARG0_MIN
     push argument 1
-    goto END_MIN
+    return
+
 label ARG0_MIN
     push argument 0
-label END_MIN
     return
 
 function Sys.max 0
@@ -16,15 +16,16 @@ function Sys.max 0
     gt
     if-goto ARG0_MAX
     push argument 1
-    goto END_MAX
+    return
+
 label ARG0_MAX
     push argument 0
-label END_MAX
     return
 
 function Sys.range 5
     push argument 0
-    pop local 0 
+    pop local 0
+
     push argument 1
     pop local 1
 
@@ -38,16 +39,16 @@ function Sys.range 5
     if-goto RETURN_ZERO
 
     push local 0
-    pop pointer 1
+    pop pointer 1 
     push that 0
-    pop local 2
+    pop local 2 
     push that 0
-    pop local 3
+    pop local 3 
 
     push constant 1
     pop local 4
 
-LOOP:
+label LOOP
     push local 4
     push local 1
     lt
@@ -57,9 +58,9 @@ LOOP:
     push local 0
     push local 4
     add
-    pop pointer 1
+    pop pointer 1 
     push that 0
-    pop temp 0
+    pop temp 0 
 
     push temp 0
     push local 2
@@ -78,12 +79,12 @@ LOOP:
 
     goto LOOP
 
-END_LOOP:
+label END_LOOP
     push local 3
     push local 2
     sub
     return
 
-RETURN_ZERO:
+label RETURN_ZERO
     push constant 0
     return
