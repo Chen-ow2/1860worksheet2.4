@@ -1,7 +1,7 @@
 function Sys.min 0
 push argument 0
 push argument 1
-lt  // Check if argument[0] < argument[1]
+lt
 if-goto MIN_FIRST
 
 push argument 1
@@ -14,7 +14,7 @@ return
 function Sys.max 0
 push argument 0
 push argument 1
-gt  // Check if argument[0] > argument[1]
+gt 
 if-goto MAX_FIRST
 
 push argument 1
@@ -33,9 +33,9 @@ if-goto RETURN_ZERO
 
 pop pointer 1
 push that 0
-pop local 0  // min = array[0]
+pop local 0
 push that 0
-pop local 1  // max = array[0]
+pop local 1 
 
 label LOOP
 push argument 1
