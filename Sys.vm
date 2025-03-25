@@ -22,7 +22,7 @@ label ARG0_MAX
     push argument 0
     return
 
-function Sys.range 5
+function Sys.range 2
     push argument 0
     pop local 0
 
@@ -39,11 +39,11 @@ function Sys.range 5
     if-goto RETURN_ZERO
 
     push local 0
-    pop pointer 1 
+    pop pointer 1
     push that 0
-    pop local 2 
+    pop local 2
     push that 0
-    pop local 3 
+    pop local 3
 
     push constant 1
     pop local 4
@@ -58,9 +58,9 @@ label LOOP
     push local 0
     push local 4
     add
-    pop pointer 1 
+    pop pointer 1
     push that 0
-    pop temp 0 
+    pop temp 0
 
     push temp 0
     push local 2
