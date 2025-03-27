@@ -1,60 +1,83 @@
-function Array.range 3
-    push argument 0 
-    push constant 0      
-    add
+function Sys.min 0
+    push argument 0
+    push argument 1
+    lt
+    if-goto ARG0_MIN
+    push argument 1
+    goto END
+label ARG0_MIN
+    push argument 0
+label END
+    return
+
+function Sys.max 0
+    push argument 0
+    push argument 1
+    gt
+    if-goto ARG0_MAX
+    push argument 1
+    goto END
+label ARG0_MAX
+    push argument 0
+label END
+    return
+
+function Sys.range 3
+    push argument 1
+    push constant 1
+    lt
+    push argument 1
+    push constant 1
+    eq
+    or
+    if-goto RETURN_ZERO
+
+    push argument 0
     pop pointer 1
-    push that 0 
-    pop local 1  
-    push that 0          
-    pop local 2 
+    push that 0
+    pop local 0
+    push that 0
+    pop local 1
 
     push constant 1
-    pop local 0          
+    pop local 2
 
-label LOOP_START
-    push local 0         
-    push argument 1      
-    lt 
-    if-goto LOOP_BODY    
-    goto LOOP_END        
+label LOOP
+    push local 2
+    push argument 1
+    lt
+    if-goto BODY
+    goto END_LOOP
 
-label LOOP_BODY
+label BODY
     push argument 0
-    push local 0         
-    add                  
-    pop pointer 1 
-    push that 0 
+    push local 2
+    add
+    pop pointer 1
+    push that 0
 
-    push that 0          
-    push local 1         
-    gt // current > max?
-    if-goto UPDATE_MAX   
-    goto SKIP_MAX        
+    push local 0
+    push that 0
+    call Sys.min 2
+    pop local 0
 
-label UPDATE_MAX
-    push that 0          
-    pop local 1 
-label SKIP_MAX
-    push that 0          
-    push local 2         
-    lt// current < min?
-    if-goto UPDATE_MIN   
-    goto SKIP_MIN        
+    push local 1
+    push that 0
+    call Sys.max 2
+    pop local 1
 
-label UPDATE_MIN
-    push that 0          
-    pop local 2 // min = current
-label SKIP_MIN
+    push local 2
+    push constant 1
+    add
+    pop local 2
+    goto LOOP
 
-    // i += 1
-    push local 0         
-    push constant 1      
-    add                  
-    pop local 0          
-    goto LOOP_START      
+label END_LOOP
+    push local 1
+    push local 0
+    sub
+    return
 
-label LOOP_END
-    push local 1 // max
-    push local 2 // min
-    sub                   
-    return               
+label RETURN_ZERO
+    push constant 0
+    return
